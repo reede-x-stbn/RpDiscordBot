@@ -16,9 +16,6 @@
     "url": "https://github.com/reede-x-stbn/RpDiscordBot/issues"
   },
   "homepage": "https://github.com/reede-x-stbn/RpDiscordBot#readme",
-  "devDependencies": {
-    "typescript": "^5.3.2"
-  },
   "dependencies": {
     "cli-color": "^2.0.3",
     "discord.js": "^12.5.1",
