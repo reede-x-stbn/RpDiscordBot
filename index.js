@@ -13,11 +13,11 @@ client.on('ready', () => {
 });
 
 client.on('message', msg => {
-    const message = msg.content.toLowerCase() // lowercase the user message
+    const message = msg.content // set variable `message` that contains message content
     const channel = msg.channel.name; // set the channel name
     let reply = ""; // set the reply variable
 
-    function messageSent(reply, channel) {
+    function messageSent(messageType, channel) {
 
         /*
             on log le nom du gars qui a envoyé un nouveau message,
@@ -27,14 +27,20 @@ client.on('message', msg => {
 
         console.log(clc.green(`\nNouveau message de : ${msg.author.username}\n  Contenu : ${message}`))
 
-        if(reply === "itsMe"){
-            console.log(clc.green(' C\'est bon, c\'est moi! :D'));
-        }else if(reply === "nothingToDo"){
-            console.log(clc.green('  Résultat : rien du tout :)'))
-        }else if(reply !== null){
-            console.log(clc.green(`  Résultat :\n    J'ai envoyé : ${reply}\n    Dans le salon : #${channel}`))
+        if(messageType !== null){
+
         }else{
             console.log(clc.red(`\tPas de message :( JE SUIS TOUT BUGGED (╥﹏╥)`))
+        }
+
+        if(messageType === "itsMe"){
+            console.log(clc.green(' C\'est bon, c\'est moi! :D'));
+        }else if(messageType === "nothingToDo"){
+            console.log(clc.green('  Résultat : rien du tout :)'))
+        }else if(messageType === "nullTest"){
+            console.log(clc.red(`  Pas de message :O JE SUIS TOUT BUGGED (╥﹏╥)`))
+        }else if(messageType !== null){
+            console.log(clc.green(`  Résultat :\n    J'ai envoyé : ${messageType}\n    Dans le salon : #${channel}`))
         }
     }
 
@@ -60,15 +66,17 @@ client.on('message', msg => {
             break;
         case false:
             switch (message) {
+                case "bonjour jarvis":
+                    messageSent("bonjour", channel)
+                    msg.reply(`bojour ${msg.author.username} :) je suis Jarvis, je viens de naître donc je ne peut pas`
+                        + `répondre a grand chose, mais j'ai hâte d'en apprendre plus sur le monde :D`)
+                    break;
                 case "test":
-                    reply = "test is ok"
-                    messageSent(reply, channel)
-                    msg.reply(reply)
+                    messageSent("test", channel)
+                    msg.reply("test is ok")
                     break;
                 case "nullTest":
-                    reply = ""
-                    messageSent(reply, channel)
-                    msg.reply(reply)
+                    messageSent("nullTest", channel)
                     break;
                 default:
                     messageSent("nothingToDo", channel)
