@@ -18,9 +18,8 @@ function pipeCommand(input, prefix, channelName){
             console.log(clc.red(`argument n°${i} : INVALIDE`))
             INVALID.push([i])
             errors = errors + `${i}, `
-            console.log(errors)
         }else{
-            console.log(clc.green(`argument n°${i} : ${arguments[i]}`))
+            console.log(clc.green(`argument n°${i} : VALIDE`))
         }
     }
 
