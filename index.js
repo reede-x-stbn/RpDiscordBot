@@ -2,21 +2,33 @@ require('dotenv').config();
 const Discord = require('discord.js');
 const clc = require("cli-color");
 const { commandFormatter } = require("./commands/commandFormatter");
+const fs = require("fs");
+
+/**
+ * token setup :
+ *      - process.env.GLOBAL_TOKEN for prod bot,
+ *      - process.env.REEDE_TOKEN for reede's bot,
+ *      - process.env.STBN_TOKEN for stbn's bot
+ */
+const token = process.env.STBN_TOKEN
 
 const prefix = '|'; // set command prefix
 const client = new Discord.Client(); // create new client
 let functionResponse = ""; // set function response variable
+const dataFromJson = JSON.parse(fs.readFileSync('data.json')) // set data parse
 
     client.on('ready', () => {
-        console.log(clc.xterm(5)("  ▄▄▄▄▄ ██   █▄▄▄▄     ▄   ▄█    ▄▄▄▄▄       █▄▄▄▄ █ ▄▄  "));
-        console.log(clc.xterm(5)("▄▀  █   █ █  █  ▄▀      █  ██   █     ▀▄     █  ▄▀ █   █ "));
-        console.log(clc.xterm(8)("    █   █▄▄█ █▀▀▌  █     █ ██ ▄  ▀▀▀▀▄       █▀▀▌  █▀▀▀  "));
-        console.log(clc.xterm(8)(" ▄ █    █  █ █  █   █    █ ▐█  ▀▄▄▄▄▀        █  █  █     "));
-        console.log(clc.xterm(4)("  ▀        █   █     █  █   ▐                  █    █    "));
-        console.log(clc.xterm(4)("          █   ▀       █▐                      ▀      ▀   "));
-        console.log(clc.xterm(4)("         ▀            ▐                                  "));
+        console.log(clc.xterm(5)("<<--------------------------------------------------------->>\n"));
+        console.log(clc.xterm(5)("    ▄▄▄▄▄ ██   █▄▄▄▄     ▄   ▄█    ▄▄▄▄▄       █▄▄▄▄ █ ▄▄  "));
+        console.log(clc.xterm(5)("  ▄▀  █   █ █  █  ▄▀      █  ██   █     ▀▄     █  ▄▀ █   █ "));
+        console.log(clc.xterm(8)("      █   █▄▄█ █▀▀▌  █     █ ██ ▄  ▀▀▀▀▄       █▀▀▌  █▀▀▀  "));
+        console.log(clc.xterm(8)("   ▄ █    █  █ █  █   █    █ ▐█  ▀▄▄▄▄▀        █  █  █     "));
+        console.log(clc.xterm(4)("    ▀        █   █     █  █   ▐                  █    █    "));
+        console.log(clc.xterm(4)("            █   ▀       █▐                      ▀      ▀   "));
+        console.log(clc.xterm(4)("           ▀            ▐                                  "));
+        console.log(clc.xterm(4)("\n<<--------------------------------------------------------->>"));
 
-
+        console.log(`\nbienvenue ! je suis connecté en tant que : ${client.user.tag}`)
 
 
     // const welcomeChannel = client.channels.cache.get('1159537874711105630');
@@ -53,7 +65,7 @@ client.on('message', input => {
             break;
         case false:
             if(message.startsWith(prefix)){
-                returning = commandFormatter(input, prefix, channelName);
+                returning = commandFormatter(input, prefix, channelName, dataFromJson);
                 channelId.send(returning)
             }else{
                 switch (message) {
@@ -68,13 +80,14 @@ client.on('message', input => {
                         console.log("test is ok")
                         break;
                     case "nullTest":
-                        console.log(clc.red('rien a faire '))
+                        console.log(clc.red('null'))
                         break;
                     default:
+                        console.log(clc.green('rien a faire ¯\\_(ツ)_/¯'))
                 }
             }
             break;
     }
 });
 
-client.login(process.env.CLIENT_TOKEN).then(); //login bot using token
+client.login(token).then();
