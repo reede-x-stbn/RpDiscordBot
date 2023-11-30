@@ -2,7 +2,7 @@ const clc = require("cli-color");
 const Discord = require('discord.js');
 const {commandNavigator} = require("./commandNavigator");
 
-function commandFormatter(input, prefix, channelName, client){
+function commandFormatter(input, prefix, channelName, dataFromJson) {
 
     // traitement du contenu du message
     const message = input.content;
@@ -13,7 +13,7 @@ function commandFormatter(input, prefix, channelName, client){
     const INVALID = [];
     let errors = "";
     let results = "";
-    let error = false;
+    let error = 0;
 
     console.log(clc.blue(`commande : ${commande}`))
 
@@ -24,14 +24,14 @@ function commandFormatter(input, prefix, channelName, client){
      * si le nombre d'argument est plus élevé, ou si il
      * y a qu'un seul argument, on entre dans le else
      */
-    if(arguments.length === 1 && arguments[0] === ''){}
-    else{
+    if (arguments.length === 1 && arguments[0] === '') {
+    } else {
         for (let i = 0; i < arguments.length; i++) {
-            if(arguments[i] === ""){
+            if (arguments[i] === "") {
                 console.log(clc.red(`argument n°${i} : INVALIDE (${arguments[i]})`))
                 INVALID.push([i])
                 errors = errors + `${i}, `
-            }else{
+            } else {
                 console.log(clc.green(`argument n°${i} : VALIDE (${arguments[i]})`))
             }
         }
@@ -44,9 +44,12 @@ function commandFormatter(input, prefix, channelName, client){
      * la commande sans son préfixe ni ses arguments, ainsi
      * que l'array contenant les arguments
      */
-    error = INVALID.length >= 1;
 
-    return commandNavigator({commande, arguments, channelName, error})
+    if (INVALID.length >= 1) {
+        error = 1;
+    }
+
+    return commandNavigator({commande, arguments, channelName, error, prefix, dataFromJson})
 }
 
 
