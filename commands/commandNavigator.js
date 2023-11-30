@@ -1,6 +1,7 @@
 const clc = require("cli-color");
 const Discord = require('discord.js');
 const {newName} = require("./commandFunctions/newName");
+const {swearGenerator} = require("./commandFunctions/swearGenerator");
 
 function commandNavigator(data) {
 
@@ -19,10 +20,13 @@ function commandNavigator(data) {
      */
     switch (command) {
         case "newName":
-            returning = newName(data)
+            returning = newName(data);
+            break;
+        case "swear":
+            returning = swearGenerator();
             break;
         default:
-            returning = `:/ je ne conais pas la commande : **${command}**`
+            returning = `${swearGenerator()} je ne conais pas la commande : **${command}**`
     }
 
     return returning
