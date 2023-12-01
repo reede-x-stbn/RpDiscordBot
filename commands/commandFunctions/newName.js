@@ -1,6 +1,7 @@
 const clc = require("cli-color");
 const Discord = require('discord.js');
 const fs = require('fs');
+const {swearGenerator} = require("./swearGenerator");
 
 function newName(data){
 
@@ -9,6 +10,7 @@ function newName(data){
     const prefix = data.prefix;
     const name = data.arguments[0];
     let returning = "";
+    let table = [];
 
 
     /**
@@ -22,6 +24,7 @@ function newName(data){
 
     if(error === 1){
         returning = `vous avez rentré un mauvais nom, probablement un espace en trop entre la commande et le nom (⊙.☉)7`
+        returning = `${swearGenerator()} t'a mis un mauvais nom bordel  ლ(｀ー´ლ)`
     }else if(data.arguments.length > 1){
         returning = `vous avez entré trop de noms ლ(｀ー´ლ)`
     }else if(name === ""){
@@ -29,17 +32,17 @@ function newName(data){
     }else{
         returning = `Bonjour ${name}, me voilà enchanté de faire votre connaissance ☜(⌒▽⌒)☞`;
 
-        data.dataFromJson.table.push({
-            "name" : name
-        })
+        table.push(data.dataFromJson)
+        table.push({"name" : name});
+        data.dataFromJson = table;
 
-        fs.writeFile("data.json", JSON.stringify(newName), (err) => {
+        fs.writeFile("data.json", JSON.stringify(data.dataFromJson), (err) => {
             if (err)
                 console.log(err);
             else {
-                console.log("File written successfully\n");
+                console.log(clc.green("File written successfully\n"));
                 console.log("The written has the following contents:");
-                console.log(fs.readFileSync("data.json", "utf8"));
+                console.log(clc.red(fs.readFileSync("data.json", "utf8")));
             }
         });
     }
