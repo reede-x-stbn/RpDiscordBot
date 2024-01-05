@@ -15,7 +15,7 @@ const token = process.env.STBN_TOKEN
 const prefix = '|'; // set command prefix
 const client = new Discord.Client(); // create new client
 let functionResponse = ""; // set function response variable
-const dataFromJson = JSON.parse(fs.readFileSync('data.json')) // set data parse
+const jsonDataPath = {"users": "Data/users.json"}
 
     client.on('ready', () => {
         console.log(clc.xterm(5)("<<--------------------------------------------------------->>\n"));
@@ -65,7 +65,7 @@ client.on('message', input => {
             break;
         case false:
             if(message.startsWith(prefix)){
-                returning = commandFormatter(input, prefix, channelName, dataFromJson);
+                returning = commandFormatter(input, prefix, channelName, jsonDataPath);
                 channelId.send(returning)
             }else{
                 switch (message) {

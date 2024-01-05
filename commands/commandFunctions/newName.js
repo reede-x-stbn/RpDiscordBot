@@ -10,7 +10,7 @@ function newName(data){
     const prefix = data.prefix;
     const name = data.arguments[0];
     let returning = "";
-    let table = [];
+    let table = JSON.parse(fs.readFileSync(data.jsonDataPath.users)) // set data parse
 
 
     /**
@@ -32,17 +32,18 @@ function newName(data){
     }else{
         returning = `Bonjour ${name}, me voilà enchanté de faire votre connaissance ☜(⌒▽⌒)☞`;
 
-        table.push(data.dataFromJson)
-        table.push({"name" : name});
-        data.dataFromJson = table;
+        table.push({"name" : name, "UserId" : data.input.userID});
 
-        fs.writeFile("data.json", JSON.stringify(data.dataFromJson), (err) => {
-            if (err)
+        console.log(clc.blue(JSON.stringify(table)))
+
+        fs.writeFile(data.jsonDataPath.users, JSON.stringify(table), (err) => {
+            if (err) {
                 console.log(err);
+            }
             else {
                 console.log(clc.green("File written successfully\n"));
                 console.log("The written has the following contents:");
-                console.log(clc.red(fs.readFileSync("data.json", "utf8")));
+                console.log(clc.red(fs.readFileSync(data.jsonDataPath.users, "utf8")));
             }
         });
     }
