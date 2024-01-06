@@ -39,6 +39,7 @@ client.on('message', input => {
     const message = input.content // set variable `message` that contains message content
     const channelName = input.channel.name; // set the channel name
     const channelId = client.channels.cache.get(input.channel.id.toString()); // set the channel id
+    const userId = client.user.id
     let returning = "";
 
     switch (input.author.bot) {
@@ -65,7 +66,7 @@ client.on('message', input => {
             break;
         case false:
             if(message.startsWith(prefix)){
-                returning = commandFormatter(input, prefix, channelName, jsonDataPath);
+                returning = commandFormatter(input, prefix, channelName, jsonDataPath, userId);
                 channelId.send(returning)
             }else{
                 switch (message) {

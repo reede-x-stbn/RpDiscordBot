@@ -2,7 +2,7 @@ const clc = require("cli-color");
 const Discord = require('discord.js');
 const {commandNavigator} = require("./commandNavigator");
 
-function commandFormatter(input, prefix, channelName, jsonDataPath) {
+function commandFormatter(input, prefix, channelName, jsonDataPath, userId) {
 
     // traitement du contenu du message
     const message = input.content;
@@ -49,7 +49,7 @@ function commandFormatter(input, prefix, channelName, jsonDataPath) {
         error = 1;
     }
 
-    return commandNavigator({commande, arguments, channelName, error, prefix, input, jsonDataPath})
+    return commandNavigator({commande, arguments, channelName, error, prefix, input, jsonDataPath, userId})
 }
 
 

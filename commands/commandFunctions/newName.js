@@ -3,10 +3,10 @@ const Discord = require('discord.js');
 const fs = require('fs');
 const {swearGenerator} = require("./swearGenerator");
 
-function newName(data){
+function newName(data) {
 
     // on initialise les données
-    const error  = data.error;
+    const error = data.error;
     const prefix = data.prefix;
     const name = data.arguments[0];
     let returning = "";
@@ -22,25 +22,26 @@ function newName(data){
      * qu'il doit faire
      */
 
-    if(error === 1){
+    if (error === 1) {
         returning = `vous avez rentré un mauvais nom, probablement un espace en trop entre la commande et le nom (⊙.☉)7`
         returning = `${swearGenerator()} t'a mis un mauvais nom bordel  ლ(｀ー´ლ)`
-    }else if(data.arguments.length > 1){
+    } else if (data.arguments.length > 1) {
         returning = `vous avez entré trop de noms ლ(｀ー´ლ)`
-    }else if(name === ""){
+    } else if (name === "") {
         returning = `Vous n'avez pas entré de nom, essayez : ${prefix}NewName Michel (ง'̀-'́)ง`
-    }else{
+    } else {
         returning = `Bonjour ${name}, me voilà enchanté de faire votre connaissance ☜(⌒▽⌒)☞`;
 
-        table.push({"name" : name, "UserId" : data.input.userID});
+        const toAddData = {"name": name, "UserId": data.userId}
+        console.log(toAddData)
+        table.push(toAddData);
 
         console.log(clc.blue(JSON.stringify(table)))
 
         fs.writeFile(data.jsonDataPath.users, JSON.stringify(table), (err) => {
             if (err) {
                 console.log(err);
-            }
-            else {
+            } else {
                 console.log(clc.green("File written successfully\n"));
                 console.log("The written has the following contents:");
                 console.log(clc.red(fs.readFileSync(data.jsonDataPath.users, "utf8")));
